@@ -3,10 +3,25 @@ const path = require('path')
 const utils = require('./utils')
 const webpack = require('webpack')
 const config = require('../config')
+/**
+ * webpack-merge 用于合并webpack配置项
+ * */ 
 const merge = require('webpack-merge')
 const baseWebpackConfig = require('./webpack.base.conf')
+// 这个插件会生成一个包含所有页面中使用script标签引用的webpack打包的文件
+// 下面使用的地方，就是用这个插件生成了dist目录里的index.html文件
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+// 友好提示插件
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
+/**
+ * portfinder 方便设置服务端口
+ * portfinder.getPort((err, port) => {
+ *   // 回调函数会获得两个参数
+ *   // port这个端口被保证是环境中为被使用的
+ * })
+ * 默认portfinder会从8000端口开始查起
+ * 可以修改起始值, 直接设置portfinder.basePort
+ * */ 
 const portfinder = require('portfinder')
 
 function resolve (dir) {
@@ -43,6 +58,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     }
   },
   plugins: [
+    // TODO 详细了解
     new webpack.DefinePlugin({
       'process.env': require('../config/dev.env')
     }),
@@ -53,7 +69,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: 'index.html',
-      inject: true,
+      inject: true, // 设置脚本位置，head还是body
       favicon: resolve('favicon.ico'),
       title: 'vue-element-admin',
       path: config.dev.assetsPublicPath + config.dev.assetsSubDirectory

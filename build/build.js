@@ -36,8 +36,10 @@ spinner.start()
  * path.join(config.build.assetsRoot, config.build.assetsSubDirectory) // '项目目录/dist/static'
  */
 // 这里的目的是移除dist目录里的static文件夹
+// 第一次的时候没有该文件
+// 多次编译的情况下，清除已有打包文件，重新打包，保持最新
 rm(path.join(config.build.assetsRoot, config.build.assetsSubDirectory), err => {
-  // 文件查找失败则抛出错误
+  // 文件移除失败则抛出错误
   if (err) throw err
   webpack(webpackConfig, (err, stats) => {
     spinner.stop()
@@ -62,6 +64,7 @@ rm(path.join(config.build.assetsRoot, config.build.assetsSubDirectory), err => {
       '  Opening index.html over file:// won\'t work.\n'
     ))
     // 如果用户的环境变量中存在npm_config_preview属性，则执行新的服务
+    // 这个服务加载文件都是dist里的文件，类似模拟线上资源加载，可以查看最终用户下载资源的大小
     if(process.env.npm_config_preview){
       server.start({
           port     : 9526,

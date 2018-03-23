@@ -38,7 +38,7 @@ module.exports = {
     // If you have problems debugging vue-files in devtools,
     // set this to false - it *may* help
     // https://vue-loader.vuejs.org/en/options.html#cachebusting
-    cacheBusting: true,
+    cacheBusting: false,
 
     // CSS Sourcemaps off by default because relative paths are "buggy"
     // with this option, according to the CSS-Loader README
@@ -50,6 +50,7 @@ module.exports = {
 
   build: {
     // Template for index.html
+    // 指定index文件位置， 生产环境指向dist文件夹
     index: path.resolve(__dirname, '../dist/index.html'),
 
     // Paths

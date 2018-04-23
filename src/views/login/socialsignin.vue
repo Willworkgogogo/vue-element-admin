@@ -1,3 +1,6 @@
+<!--
+  定义了其他账号登录的方式，如微信、qq
+-->
 <template>
   <div class="social-signup-container">
     <div class="sign-btn" @click="wechatHandleClick('wechat')">
